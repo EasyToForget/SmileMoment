@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="94dp"
+    android:foreground="?android:selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="90dp"
+        android:layout_height="66dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@color/place_holder_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/image"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="每日轻松一刻：岛国成人英语"
+            android:textColor="@color/title_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/digest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="做最好的朋友不容易，比如首先要对彼此没性欲。"
+            android:textColor="@color/digest_color" />
+    </LinearLayout>
+</RelativeLayout>

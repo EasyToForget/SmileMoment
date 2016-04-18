@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/loading_bg_color"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/load_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无内容，刷新试试哦～"
+            android:layout_centerInParent="true"
+            android:textColor="#888888"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:id="@+id/load_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:contentDescription="@null"
+            android:src="@drawable/base_empty_view" />
+
+
+        <fr.castorflex.android.circularprogressbar.CircularProgressBar
+            android:id="@+id/loading"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            app:cpb_color="@color/loading_color" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp" />
+
+
+</LinearLayout>

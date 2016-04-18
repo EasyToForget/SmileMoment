@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">轻松一刻</string>
+    <string name="navigation_bottom_image_text">图文</string>
+    <string name="navigation_bottom_voice">音频</string>
+    <string name="navigation_bottom_joke">段子</string>
+    <string name="loading_full">已加载全部内容</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>

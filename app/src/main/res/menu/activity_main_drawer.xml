@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/ic_menu_night"
+            android:title="深夜畅聊" />
+        <item
+            android:id="@+id/nav_study"
+            android:icon="@drawable/ic_menu_study"
+            android:title="老司机学堂" />
+        <item
+            android:id="@+id/nav_game"
+            android:icon="@drawable/ic_menu_game"
+            android:title="小游戏" />
+        <item
+            android:id="@+id/nav_voice"
+            android:icon="@drawable/ic_menu_voice"
+            android:title="今日之声" />
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_menu_voice"
+            android:title="新闻7点整" />
+    </group>
+
+    <item android:title="小便">
+        <menu>
+            <item
+                android:id="@+id/nav_crazy"
+                android:icon="@drawable/ic_menu_share"
+                android:title="胖编怪谈" />
+            <item
+                android:id="@+id/nav_up"
+                android:icon="@drawable/ic_up_gray_16dp"
+                android:title="小编推贱" />
+        </menu>
+    </item>
+
+</menu>
