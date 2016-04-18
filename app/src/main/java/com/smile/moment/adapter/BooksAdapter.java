@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2016 [zhiye.wei@gmail.com]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License”);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.smile.moment.adapter;
 
 import android.app.Activity;
@@ -11,7 +26,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.smile.moment.R;
 import com.smile.moment.entity.Books;
-import com.smile.moment.widget.recycleviewhelper.ItemTouchHelperAdapter;
+import com.smile.moment.widget.recyclerviewhelper.ItemTouchHelperAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +51,7 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        switch (viewType){
+        switch (viewType) {
             case Books.TYPE_CONTENT:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fragment_books, parent, false);
                 return new ViewHolder(view);
@@ -48,7 +63,7 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder){
+        if (holder instanceof ViewHolder) {
 
             ViewHolder viewHolder = (ViewHolder) holder;
             Books books = list.get(position);
@@ -58,7 +73,7 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     .placeholder(R.color.place_holder_color)
                     .error(R.color.place_holder_color)
                     .into(viewHolder.image);
-        } else if (holder instanceof BannerHolder){
+        } else if (holder instanceof BannerHolder) {
             BannerHolder bannerHolder = (BannerHolder) holder;
             Glide.with(activity).load(list.get(position).getImgsrc())
                     .placeholder(R.color.place_holder_color)
@@ -124,7 +139,7 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    class BannerHolder extends RecyclerView.ViewHolder{
+    class BannerHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.banner)
         ImageView banner;
 

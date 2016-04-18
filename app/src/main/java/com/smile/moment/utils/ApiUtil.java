@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2016 [zhiye.wei@gmail.com]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License”);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.smile.moment.utils;
 
 /**
@@ -49,6 +64,10 @@ public class ApiUtil {
      * 今日之声
      */
     public final static String MOMENT_TODAY_VOICE = "http://c.m.163.com/nc/special/S1426233520789.html";
+
+    public final static String MOMENT_CONTENT = "http://3g.163.com/ntes/special/0034073A/wechat_article.html?docid=";
+
+
 
     public final static String MOMENT_NIGHT = "http://c.3g.163.com/nc/article/BJFEMIGU00964LQ9/full.html";
 

@@ -1,18 +1,29 @@
+/*
+ * Copyright (c) 2016 [zhiye.wei@gmail.com]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License”);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.smile.moment.activity;
 
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 
 import com.smile.moment.R;
-import com.smile.moment.utils.ColorUtil;
+import com.smile.moment.utils.ApiUtil;
 import com.smile.moment.utils.Constants;
 import com.smile.moment.widget.LoadingWebView;
 
@@ -39,17 +50,11 @@ public class BooksActivity extends AppCompatActivity {
     }
 
     private void init() {
-        Context context = getApplicationContext();
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
-
-        toolbar.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(ColorUtil.colorBurn(ContextCompat.getColor(context, R.color.colorAccent)));
-        }
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,11 +63,7 @@ public class BooksActivity extends AppCompatActivity {
             }
         });
 
-        //String url = "http://c.m.163.com/nc/article/BKDAF5T200964LQ9/full.html";
-        //String url = "http://3g.163.com/ntes/special/0034073A/wechat_article.html?docid=BK6LAGFJ00964LQ9";
-        //String url = "http://3g.163.com/ntes/16/0412/18/BKFKUG6O00964LQ9.html";
-
-        String url = "http://3g.163.com/ntes/special/0034073A/wechat_article.html?docid=" + getIntent().getStringExtra(Constants.EXTRA_DOCS_ID);
+        String url = ApiUtil.MOMENT_CONTENT + getIntent().getStringExtra(Constants.EXTRA_DOCS_ID);
 
         webView.getSettings().setDefaultTextEncodingName("utf-8");
 
