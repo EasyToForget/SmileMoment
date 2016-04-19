@@ -7,6 +7,11 @@
 ![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo3.gif)
 ![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo4.gif)
 
+
+###In progress
+音频界面实现跟网易云音乐同样的效果
+
+
 ###开源项目说明
 
 > **ButterKnife**
