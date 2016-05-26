@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/arrow_to_text_space"
+        android:layout_weight="1">
+
+        <View
+            android:id="@+id/arrowTop"
+            android:layout_width="@dimen/arrow_width"
+            android:layout_height="@dimen/arrow_height"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/swipeback_arrow_left" />
+
+    </FrameLayout>
+
+    <com.hannesdorfmann.swipeback.view.VerticalTextView
+        android:id="@+id/text"
+        style="@style/swipeBackText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="松手返回" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/arrow_to_text_space"
+        android:layout_weight="1">
+
+        <View
+            android:id="@+id/arrowBottom"
+            android:layout_width="@dimen/arrow_width"
+            android:layout_height="@dimen/arrow_height"
+            android:layout_gravity="top|right"
+            android:background="@drawable/swipeback_arrow_left" />
+
+    </FrameLayout>
+
+
+</LinearLayout>

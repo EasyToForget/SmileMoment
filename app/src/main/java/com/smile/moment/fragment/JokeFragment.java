@@ -99,7 +99,7 @@ public class JokeFragment extends Fragment implements OnStartDragListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         adapter = new JokesAdapter(activity, list);
         recyclerView.setAdapter(adapter);
-        helper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(adapter));
+        helper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(adapter, ItemTouchHelper.START | ItemTouchHelper.END));
         helper.attachToRecyclerView(recyclerView);
 
         loadingView.setLoading();

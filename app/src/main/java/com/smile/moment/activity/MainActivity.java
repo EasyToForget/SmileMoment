@@ -16,7 +16,6 @@
 package com.smile.moment.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -38,10 +37,11 @@ import com.bumptech.glide.Glide;
 import com.smile.moment.R;
 import com.smile.moment.fragment.BooksFragment;
 import com.smile.moment.fragment.JokeFragment;
-import com.smile.moment.fragment.VoiceFragment;
+import com.smile.moment.fragment.AudioFragment;
 import com.smile.moment.utils.ApiUtil;
 import com.smile.moment.utils.ColorUtil;
 import com.smile.moment.utils.Constants;
+import com.smile.moment.utils.StartActivityUtil;
 import com.smile.moment.widget.GlideCircleTransform;
 
 import butterknife.Bind;
@@ -94,16 +94,16 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationBar.addItem(new AHBottomNavigationItem(R.string.navigation_bottom_joke, R.drawable.ic_video_white_24dp, R.color.colorAccent));
 
         final BooksFragment booksFragment = new BooksFragment();
-        final VoiceFragment voiceFragment = new VoiceFragment();
+        final AudioFragment audioFragment = new AudioFragment();
         final JokeFragment jokeFragment = new JokeFragment();
-        fragments = new Fragment[]{booksFragment, voiceFragment, jokeFragment};
+        fragments = new Fragment[]{booksFragment, audioFragment, jokeFragment};
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, booksFragment)
-                .add(R.id.container, voiceFragment)
+                .add(R.id.container, audioFragment)
                 .add(R.id.container, jokeFragment)
                 .show(booksFragment)
-                .hide(voiceFragment)
+                .hide(audioFragment)
                 .hide(jokeFragment)
                 .commit();
 
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity
                         booksFragment.backToTop();
                         break;
                     case 1:
-                        voiceFragment.backToTop();
+                        audioFragment.backToTop();
                         break;
                     case 2:
                         jokeFragment.backToTop();
@@ -143,32 +143,31 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Intent intent = new Intent();
-        intent.setClass(this, NightChatActivity.class);
+        Bundle bundle = new Bundle();
         switch (item.getItemId()) {
             case R.id.nav_chat:
-                intent.putExtra(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_NIGHT_CHAT);
+                bundle.putInt(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_NIGHT_CHAT);
                 break;
             case R.id.nav_study:
-                intent.putExtra(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_DRIVER_STUDY);
+                bundle.putInt(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_DRIVER_STUDY);
                 break;
             case R.id.nav_game:
-                intent.putExtra(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_GAME);
+                bundle.putInt(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_GAME);
                 break;
             case R.id.nav_voice:
-                intent.putExtra(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_TODAY_VOICE);
+                bundle.putInt(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_TODAY_VOICE);
                 break;
             case R.id.nav_crazy:
-                intent.putExtra(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_FAT_CHAT);
+                bundle.putInt(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_FAT_CHAT);
                 break;
             case R.id.nav_up:
-                intent.putExtra(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_UP);
+                bundle.putInt(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_UP);
                 break;
             case R.id.nav_news:
-                intent.putExtra(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_SEVEN_NEWS);
+                bundle.putInt(Constants.EXTRA_SOURCE_ID, Constants.SOURCE_FOR_SEVEN_NEWS);
                 break;
         }
-        startActivity(intent);
+        StartActivityUtil.start(this, NightChatActivity.class, bundle);
 
 
         drawerLayout.closeDrawer(GravityCompat.START);

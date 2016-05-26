@@ -69,6 +69,6 @@ public class ApiUtil {
 
 
 
-    public final static String MOMENT_NIGHT = "http://c.3g.163.com/nc/article/BJFEMIGU00964LQ9/full.html";
+    public final static String MOMENT_VOICE_CONTENT = "http://c.3g.163.com/nc/article/docId/full.html";
 
 }

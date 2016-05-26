@@ -28,6 +28,11 @@
         <activity
             android:name=".activity.NightChatActivity"
             android:theme="@style/AppTheme.Toolbar" />
+        <activity
+            android:name=".activity.AudioActivity"
+            android:theme="@style/AppTheme.Toolbar" />
+        <activity android:name=".activity.AudioOnlineActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

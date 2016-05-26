@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,7 +55,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class NightChatActivity extends AppCompatActivity implements OnStartDragListener {
+public class NightChatActivity extends BaseSwipeActivity implements OnStartDragListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -173,7 +172,7 @@ public class NightChatActivity extends AppCompatActivity implements OnStartDragL
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         adapter = new BooksAdapter(activity, list);
         recyclerView.setAdapter(adapter);
-        helper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(adapter));
+        helper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(adapter, ItemTouchHelper.START));
         helper.attachToRecyclerView(recyclerView);
 
         loadingView.setLoading();

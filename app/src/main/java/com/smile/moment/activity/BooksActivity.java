@@ -17,7 +17,6 @@ package com.smile.moment.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +33,7 @@ import butterknife.ButterKnife;
  * @author Smile Wei
  * @since 2016/4/12.
  */
-public class BooksActivity extends AppCompatActivity {
+public class BooksActivity extends BaseSwipeActivity {
     @Bind(R.id.web_view)
     LoadingWebView webView;
 

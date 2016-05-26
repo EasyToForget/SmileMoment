@@ -35,12 +35,14 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smile.moment.R;
+import com.smile.moment.activity.AudioActivity;
 import com.smile.moment.activity.BooksActivity;
 import com.smile.moment.adapter.BooksAdapter;
 import com.smile.moment.entity.Books;
 import com.smile.moment.utils.ApiUtil;
 import com.smile.moment.utils.Constants;
 import com.smile.moment.utils.NetWorkUtil;
+import com.smile.moment.utils.StartActivityUtil;
 import com.smile.moment.utils.ToastUtil;
 import com.smile.moment.volley.VolleyHttpClient;
 import com.smile.moment.widget.DividerDecoration;
@@ -62,7 +64,7 @@ import butterknife.ButterKnife;
  * @author Smile Wei
  * @since 2016/4/11.
  */
-public class VoiceFragment extends Fragment implements OnStartDragListener {
+public class AudioFragment extends Fragment implements OnStartDragListener {
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
     @Bind(R.id.refresh_layout)
@@ -105,7 +107,7 @@ public class VoiceFragment extends Fragment implements OnStartDragListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         adapter = new BooksAdapter(activity, list);
         recyclerView.setAdapter(adapter);
-        helper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(adapter));
+        helper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(adapter, ItemTouchHelper.START | ItemTouchHelper.END));
         helper.attachToRecyclerView(recyclerView);
 
         loadingView.setLoading();
@@ -121,10 +123,9 @@ public class VoiceFragment extends Fragment implements OnStartDragListener {
             @Override
             public void onItemClick(int position) {
 
-                Intent intent = new Intent();
-                intent.setClass(activity, BooksActivity.class);
-                intent.putExtra(Constants.EXTRA_DOCS_ID, list.get(position).getDocid());
-                startActivity(intent);
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.EXTRA_DOCS_ID, list.get(position).getDocid());
+                StartActivityUtil.start(activity, AudioActivity.class, bundle);
             }
         });
         getBooks(loadingView, false);
