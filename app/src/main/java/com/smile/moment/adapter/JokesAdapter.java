@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smile.moment.R;
-import com.smile.moment.entity.Jokes;
+import com.smile.moment.model.entity.Jokes;
 import com.smile.moment.widget.FooterLoading;
 import com.smile.moment.widget.recyclerviewhelper.ItemTouchHelperAdapter;
 

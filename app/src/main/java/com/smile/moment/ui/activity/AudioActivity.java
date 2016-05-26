@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.smile.moment.activity;
+package com.smile.moment.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,7 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smile.moment.R;
 import com.smile.moment.adapter.AudioAdapter;
-import com.smile.moment.entity.VoiceContent;
+import com.smile.moment.model.entity.VoiceContent;
 import com.smile.moment.utils.ApiUtil;
 import com.smile.moment.utils.Constants;
 import com.smile.moment.utils.DateTimeFormatUtil;
@@ -123,7 +123,7 @@ public class AudioActivity extends BaseSwipeActivity {
                 loadingView.setLoadError();
             return;
         }
-        VolleyHttpClient.getInstance(context).get(ApiUtil.MOMENT_VOICE_CONTENT.replace("docId", docId), null, null, loadingView,
+        VolleyHttpClient.getInstance(context).get(ApiUtil.MOMENT_VOICE_CONTENT.replace("docId", docId), null,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

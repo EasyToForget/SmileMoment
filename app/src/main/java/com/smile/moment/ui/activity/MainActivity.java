@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.smile.moment.activity;
+package com.smile.moment.ui.activity;
 
 import android.content.Context;
 import android.os.Build;
@@ -35,9 +35,9 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.bumptech.glide.Glide;
 import com.smile.moment.R;
-import com.smile.moment.fragment.BooksFragment;
-import com.smile.moment.fragment.JokeFragment;
-import com.smile.moment.fragment.AudioFragment;
+import com.smile.moment.ui.fragment.ImageTextFragment;
+import com.smile.moment.ui.fragment.JokeFragment;
+import com.smile.moment.ui.fragment.VoiceFragment;
 import com.smile.moment.utils.ApiUtil;
 import com.smile.moment.utils.ColorUtil;
 import com.smile.moment.utils.Constants;
@@ -93,17 +93,17 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationBar.addItem(new AHBottomNavigationItem(R.string.navigation_bottom_voice, R.drawable.ic_voice_white_24dp, R.color.colorAccent));
         bottomNavigationBar.addItem(new AHBottomNavigationItem(R.string.navigation_bottom_joke, R.drawable.ic_video_white_24dp, R.color.colorAccent));
 
-        final BooksFragment booksFragment = new BooksFragment();
-        final AudioFragment audioFragment = new AudioFragment();
+        final ImageTextFragment imageTextFragment = new ImageTextFragment();
+        final VoiceFragment voiceFragment = new VoiceFragment();
         final JokeFragment jokeFragment = new JokeFragment();
-        fragments = new Fragment[]{booksFragment, audioFragment, jokeFragment};
+        fragments = new Fragment[]{imageTextFragment, voiceFragment, jokeFragment};
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, booksFragment)
-                .add(R.id.container, audioFragment)
+                .add(R.id.container, imageTextFragment)
+                .add(R.id.container, voiceFragment)
                 .add(R.id.container, jokeFragment)
-                .show(booksFragment)
-                .hide(audioFragment)
+                .show(imageTextFragment)
+                .hide(voiceFragment)
                 .hide(jokeFragment)
                 .commit();
 
@@ -114,10 +114,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 switch (currentPosition) {
                     case 0:
-                        booksFragment.backToTop();
+                        imageTextFragment.backToTop();
                         break;
                     case 1:
-                        audioFragment.backToTop();
+                        voiceFragment.backToTop();
                         break;
                     case 2:
                         jokeFragment.backToTop();
@@ -180,7 +180,6 @@ public class MainActivity extends AppCompatActivity
             getWindow().setStatusBarColor(ColorUtil.colorBurn(ContextCompat.getColor(context, colorId)));
         }
         //Snackbar.make(drawerLayout, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
     }
 
 

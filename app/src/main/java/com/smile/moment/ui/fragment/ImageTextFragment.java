@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.smile.moment.fragment;
+package com.smile.moment.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,29 +29,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.smile.moment.R;
-import com.smile.moment.activity.AudioActivity;
-import com.smile.moment.activity.BooksActivity;
 import com.smile.moment.adapter.BooksAdapter;
-import com.smile.moment.entity.Books;
-import com.smile.moment.utils.ApiUtil;
+import com.smile.moment.model.entity.ImageText;
+import com.smile.moment.presenter.LoadPresenter;
+import com.smile.moment.presenter.ImageTextPresenterImpl;
+import com.smile.moment.ui.activity.ImageTextActivity;
+import com.smile.moment.ui.view.ImageTextView;
 import com.smile.moment.utils.Constants;
-import com.smile.moment.utils.NetWorkUtil;
 import com.smile.moment.utils.StartActivityUtil;
 import com.smile.moment.utils.ToastUtil;
-import com.smile.moment.volley.VolleyHttpClient;
 import com.smile.moment.widget.DividerDecoration;
 import com.smile.moment.widget.LoadingView;
 import com.smile.moment.widget.recyclerviewhelper.OnStartDragListener;
 import com.smile.moment.widget.recyclerviewhelper.SimpleItemTouchHelperCallback;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,18 +55,20 @@ import butterknife.ButterKnife;
  * @author Smile Wei
  * @since 2016/4/11.
  */
-public class BooksFragment extends Fragment implements OnStartDragListener {
+public class ImageTextFragment extends Fragment implements BooksAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, OnStartDragListener, ImageTextView {
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
     @Bind(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
     @Bind(R.id.loading_view)
     LoadingView loadingView;
-    private List<Books> list;
+    private List<ImageText> list;
     private Activity activity;
     private Context context;
     private BooksAdapter adapter;
     private ItemTouchHelper helper;
+    private LoadPresenter loadPresenter;
+    private boolean isPullRefresh = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -88,14 +81,10 @@ public class BooksFragment extends Fragment implements OnStartDragListener {
     private void init() {
         activity = getActivity();
         context = activity.getApplicationContext();
+        loadPresenter = new ImageTextPresenterImpl(this);
         list = new ArrayList<>();
         refreshLayout.setColorSchemeResources(R.color.loading_color);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getBooks(null, false);
-            }
-        });
+        refreshLayout.setOnRefreshListener(this);
 
         DividerDecoration.Builder builder = new DividerDecoration.Builder(context);
         builder.setColorResource(R.color.divider_color)
@@ -106,28 +95,19 @@ public class BooksFragment extends Fragment implements OnStartDragListener {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         adapter = new BooksAdapter(activity, list);
+        adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
         helper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(adapter, ItemTouchHelper.START | ItemTouchHelper.END));
         helper.attachToRecyclerView(recyclerView);
 
-        loadingView.setLoading();
         loadingView.setOnReLoadListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingView.setLoading();
-                getBooks(loadingView, false);
+                loadPresenter.getData();
             }
         });
 
-        adapter.setOnItemClickListener(new BooksAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Bundle bundle = new Bundle();
-                bundle.putString(Constants.EXTRA_DOCS_ID, list.get(position).getDocid());
-                StartActivityUtil.start(activity, BooksActivity.class, bundle);
-            }
-        });
-        getBooks(loadingView, false);
+        loadPresenter.getData();
     }
 
     public void backToTop() {
@@ -139,56 +119,6 @@ public class BooksFragment extends Fragment implements OnStartDragListener {
         });
     }
 
-    private void getBooks(final LoadingView loadingView, final boolean isLoad) {
-        if (!NetWorkUtil.isNetworkAvailable(context)) {
-            ToastUtil.showSortToast(context, "哎呀，网络开小差啦～～～");
-            refreshLayout.setRefreshing(false);
-            if (loadingView != null)
-                loadingView.setLoadError();
-            return;
-        }
-        VolleyHttpClient.getInstance(context).get(ApiUtil.MOMENT_IMAGE_TEXT, null, null, loadingView,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            if (!isLoad) {
-                                list.clear();
-                            }
-                            refreshLayout.setRefreshing(false);
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONObject data = jsonObject.getJSONObject("S1426236075742");
-                            JSONArray topics = data.getJSONArray("topics");
-                            JSONObject topic = topics.getJSONObject(0);
-                            JSONArray docs = topic.getJSONArray("docs");
-                            String book = docs.toString();
-                            List<Books> booksList = new Gson().fromJson(book, new TypeToken<List<Books>>() {
-                            }.getType());
-                            if (booksList.size() == 0) {
-                                if (loadingView != null)
-                                    loadingView.setNoData();
-                            }
-                            Books books = new Books();
-                            books.setType(Books.TYPE_BANNER);
-                            books.setImgsrc(data.getString("banner"));
-                            list.add(books);
-                            list.addAll(booksList);
-                            adapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (loadingView != null)
-                            loadingView.setLoadError();
-                        refreshLayout.setRefreshing(false);
-                    }
-                });
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -196,7 +126,54 @@ public class BooksFragment extends Fragment implements OnStartDragListener {
     }
 
     @Override
+    public void onItemClick(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.EXTRA_DOCS_ID, list.get(position).getDocid());
+        StartActivityUtil.start(activity, ImageTextActivity.class, bundle);
+    }
+
+    @Override
+    public void onRefresh() {
+        isPullRefresh = true;
+        loadPresenter.getData();
+    }
+
+    @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
         helper.startDrag(viewHolder);
+    }
+
+    @Override
+    public void loading() {
+        if (!isPullRefresh)
+            loadingView.setLoading();
+        isPullRefresh = false;
+    }
+
+    @Override
+    public void networkError() {
+        ToastUtil.showSortToast(context, "哎呀，网络开小差啦～～～");
+        refreshLayout.setRefreshing(false);
+        loadingView.setLoadError();
+    }
+
+    @Override
+    public void error(VolleyError error) {
+        loadingView.setLoadError();
+        refreshLayout.setRefreshing(false);
+        ToastUtil.showSortToast(context, "服务器出错。。。");
+    }
+
+    @Override
+    public void setData(List<ImageText> imageTextList) {
+        list.clear();
+        list.addAll(imageTextList);
+        refreshLayout.setRefreshing(false);
+        if (imageTextList.size() <= 1) {
+            loadingView.setNoData();
+        } else {
+            loadingView.setLoaded();
+        }
+        adapter.notifyDataSetChanged();
     }
 }

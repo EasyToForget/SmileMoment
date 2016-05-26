@@ -1,4 +1,4 @@
-package com.smile.moment.activity;
+package com.smile.moment.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

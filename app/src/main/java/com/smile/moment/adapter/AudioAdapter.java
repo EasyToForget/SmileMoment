@@ -24,7 +24,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.smile.moment.R;
-import com.smile.moment.entity.VoiceContent;
+import com.smile.moment.model.entity.VoiceContent;
 
 import java.util.List;
 

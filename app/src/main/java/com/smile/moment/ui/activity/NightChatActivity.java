@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.smile.moment.activity;
+package com.smile.moment.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -34,7 +34,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smile.moment.R;
 import com.smile.moment.adapter.BooksAdapter;
-import com.smile.moment.entity.Books;
+import com.smile.moment.model.entity.ImageText;
 import com.smile.moment.utils.ApiUtil;
 import com.smile.moment.utils.Constants;
 import com.smile.moment.utils.NetWorkUtil;
@@ -66,7 +66,7 @@ public class NightChatActivity extends BaseSwipeActivity implements OnStartDragL
     @Bind(R.id.loading_view)
     LoadingView loadingView;
 
-    private List<Books> list;
+    private List<ImageText> list;
     private Activity activity;
     private Context context;
     private BooksAdapter adapter;
@@ -189,7 +189,7 @@ public class NightChatActivity extends BaseSwipeActivity implements OnStartDragL
             public void onItemClick(int position) {
 
                 Intent intent = new Intent();
-                intent.setClass(activity, BooksActivity.class);
+                intent.setClass(activity, ImageTextActivity.class);
                 intent.putExtra(Constants.EXTRA_DOCS_ID, list.get(position).getDocid());
                 startActivity(intent);
             }
@@ -205,7 +205,7 @@ public class NightChatActivity extends BaseSwipeActivity implements OnStartDragL
                 loadingView.setLoadError();
             return;
         }
-        VolleyHttpClient.getInstance(context).get(url, null, null, loadingView,
+        VolleyHttpClient.getInstance(context).get(url, null,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -220,17 +220,17 @@ public class NightChatActivity extends BaseSwipeActivity implements OnStartDragL
                             JSONObject topic = topics.getJSONObject(0);
                             JSONArray docs = topic.getJSONArray("docs");
                             String book = docs.toString();
-                            List<Books> booksList = new Gson().fromJson(book, new TypeToken<List<Books>>() {
+                            List<ImageText> imageTextList = new Gson().fromJson(book, new TypeToken<List<ImageText>>() {
                             }.getType());
-                            if (booksList.size() == 0) {
+                            if (imageTextList.size() == 0) {
                                 if (loadingView != null)
                                     loadingView.setNoData();
                             }
-                            Books books = new Books();
-                            books.setType(Books.TYPE_BANNER);
-                            books.setImgsrc(data.getString("banner"));
-                            list.add(books);
-                            list.addAll(booksList);
+                            ImageText imageText = new ImageText();
+                            imageText.setType(ImageText.TYPE_BANNER);
+                            imageText.setImgsrc(data.getString("banner"));
+                            list.add(imageText);
+                            list.addAll(imageTextList);
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();

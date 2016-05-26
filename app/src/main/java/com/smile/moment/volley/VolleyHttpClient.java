@@ -15,10 +15,8 @@
  */
 package com.smile.moment.volley;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -26,7 +24,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.Volley;
-import com.smile.moment.widget.LoadingView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -42,8 +39,6 @@ public class VolleyHttpClient {
      * 超时重连时间
      */
     public static final int TIMEOUT_MS = 10000;
-
-    public static final String TAG = "VolleyHttpClient";
 
     private Context context;
 
@@ -82,48 +77,26 @@ public class VolleyHttpClient {
      * 获取请求队列
      */
     private RequestQueue getRequestQueue() {
-        if (requestQueue != null) {
+        if (requestQueue == null) {
             init();
         }
         return requestQueue;
     }
 
-    /**
-     * 定义post请求
-     *
-     * @param url           请求url
-     * @param params        请求参数
-     * @param headers       请求头部
-     * @param dialog        显示对话框
-     * @param view          显示加载view
-     * @param listener      请求成功监听
-     * @param errorListener 请求失败监听
-     * @return 请求
-     */
-    public Request post(String url, Map<String, String> params,
-                        Map<String, String> headers, Dialog dialog, View view,
-                        Listener<String> listener, ErrorListener errorListener) {
-        PostRequest postRequest = new PostRequest(url, params, headers,
-                dialog, view, listener, errorListener, context);
-        setRequestRetryPolicy(postRequest, 0);
-        return getRequestQueue().add(postRequest);
-    }
 
     /**
      * 定义post请求
      *
      * @param url           请求url
      * @param params        请求参数
-     * @param dialog        显示对话框
-     * @param view          显示加载view
      * @param listener      请求成功监听
      * @param errorListener 请求失败监听
      * @return 请求
      */
-    public Request post(String url, Map<String, String> params, Dialog dialog, View view,
+    public Request post(String url, Map<String, String> params,
                         Listener<String> listener, ErrorListener errorListener) {
         PostRequest postRequest = new PostRequest(url, params,
-                dialog, view, listener, errorListener, context);
+                listener, errorListener);
         setRequestRetryPolicy(postRequest, 0);
         return getRequestQueue().add(postRequest);
     }
@@ -134,16 +107,14 @@ public class VolleyHttpClient {
      * @param timeOut       超时时间
      * @param url           请求url
      * @param params        请求参数
-     * @param dialog        显示对话框
-     * @param view          显示加载view
      * @param listener      请求成功监听
      * @param errorListener 请求失败监听
      * @return 请求
      */
-    public Request post(int timeOut, String url, Map<String, String> params, Dialog dialog, View view,
+    public Request post(int timeOut, String url, Map<String, String> params,
                         Listener<String> listener, ErrorListener errorListener) {
         PostRequest postRequest = new PostRequest(url, params,
-                dialog, view, listener, errorListener, context);
+                listener, errorListener);
         setRequestRetryPolicy(postRequest, 0, timeOut);
         return getRequestQueue().add(postRequest);
     }
@@ -153,41 +124,12 @@ public class VolleyHttpClient {
      *
      * @param url           请求url
      * @param params        请求参数
-     * @param headers       请求头部
-     * @param dialog        显示对话框
-     * @param view          显示加载view
      * @param listener      请求成功监听
      * @param errorListener 请求失败监听
      * @return 请求
      */
     public Request get(String url, Map<String, String> params,
-                       Map<String, String> headers, Dialog dialog, LoadingView view,
-                       Listener<String> listener, ErrorListener errorListener) {
-
-        String endUrl = url + "?" + encodeParameters(params);
-
-        Log.d("url", endUrl);
-
-        GetRequest getRequest = new GetRequest(
-                endUrl, headers, dialog, view, listener,
-                errorListener, context);
-        setRequestRetryPolicy(getRequest, 1);
-        return getRequestQueue().add(getRequest);
-    }
-
-    /**
-     * 定义get请求
-     *
-     * @param url           请求url
-     * @param params        请求参数
-     * @param dialog        显示对话框
-     * @param view          显示加载view
-     * @param listener      请求成功监听
-     * @param errorListener 请求失败监听
-     * @return 请求
-     */
-    public Request get(String url, Map<String, String> params,
-                       Dialog dialog, LoadingView view, Listener<String> listener,
+                       Listener<String> listener,
                        ErrorListener errorListener) {
 
         String endUrl = url + "?" + encodeParameters(params);
@@ -195,8 +137,7 @@ public class VolleyHttpClient {
         Log.d("url", endUrl);
 
         GetRequest getRequest = new GetRequest(
-                endUrl, dialog, view, listener,
-                errorListener, context);
+                endUrl, listener, errorListener);
         setRequestRetryPolicy(getRequest, 1);
         return getRequestQueue().add(getRequest);
     }

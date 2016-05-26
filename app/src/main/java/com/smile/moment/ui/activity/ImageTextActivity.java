@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.smile.moment.activity;
+package com.smile.moment.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
  * @author Smile Wei
  * @since 2016/4/12.
  */
-public class BooksActivity extends BaseSwipeActivity {
+public class ImageTextActivity extends BaseSwipeActivity {
     @Bind(R.id.web_view)
     LoadingWebView webView;
 

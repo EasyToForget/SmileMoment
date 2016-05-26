@@ -3,7 +3,6 @@ package com.smile.moment.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -54,7 +53,7 @@ public class LoadingView extends FrameLayout {
         ButterKnife.bind(view);
     }
 
-    public void setVisible(int visibility) {
+    private void setVisible(int visibility) {
         if (visibility == VISIBLE) {
             setVisibility(VISIBLE);
             loading.setVisibility(VISIBLE);
@@ -70,12 +69,15 @@ public class LoadingView extends FrameLayout {
     }
 
     public void setLoading() {
-        loadError.setVisibility(GONE);
-        loadNoData.setVisibility(GONE);
-        loading.setVisibility(VISIBLE);
+        setVisible(VISIBLE);
+    }
+
+    public void setLoaded(){
+        setVisible(GONE);
     }
 
     public void setLoadError() {
+        setVisible(VISIBLE);
         loadError.setVisibility(VISIBLE);
         loadNoData.setVisibility(GONE);
         loading.setVisibility(GONE);
@@ -83,6 +85,7 @@ public class LoadingView extends FrameLayout {
 
 
     public void setNoData() {
+        setVisible(VISIBLE);
         loadError.setVisibility(GONE);
         loadNoData.setVisibility(VISIBLE);
         loading.setVisibility(GONE);
@@ -91,5 +94,4 @@ public class LoadingView extends FrameLayout {
     public void setOnReLoadListener(OnClickListener listener) {
         setOnClickListener(listener);
     }
-
 }

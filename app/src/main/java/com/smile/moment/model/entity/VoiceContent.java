@@ -1,4 +1,4 @@
-package com.smile.moment.entity;
+package com.smile.moment.model.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;

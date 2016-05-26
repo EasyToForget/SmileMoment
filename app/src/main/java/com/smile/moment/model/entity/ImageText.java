@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.smile.moment.entity;
+package com.smile.moment.model.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -22,7 +22,7 @@ import android.os.Parcelable;
  * @author Smile Wei
  * @since 2016/4/11.
  */
-public class Books implements Parcelable {
+public class ImageText implements Parcelable {
 
 
     /**
@@ -139,10 +139,10 @@ public class Books implements Parcelable {
         dest.writeString(this.url);
     }
 
-    public Books() {
+    public ImageText() {
     }
 
-    protected Books(Parcel in) {
+    protected ImageText(Parcel in) {
         this.type = in.readInt();
         this.docid = in.readString();
         this.title = in.readString();
@@ -154,15 +154,15 @@ public class Books implements Parcelable {
         this.url = in.readString();
     }
 
-    public static final Creator<Books> CREATOR = new Creator<Books>() {
+    public static final Creator<ImageText> CREATOR = new Creator<ImageText>() {
         @Override
-        public Books createFromParcel(Parcel source) {
-            return new Books(source);
+        public ImageText createFromParcel(Parcel source) {
+            return new ImageText(source);
         }
 
         @Override
-        public Books[] newArray(int size) {
-            return new Books[size];
+        public ImageText[] newArray(int size) {
+            return new ImageText[size];
         }
     };
 }

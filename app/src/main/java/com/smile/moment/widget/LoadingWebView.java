@@ -34,9 +34,9 @@ public class LoadingWebView extends WebView {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             if (newProgress == 100) {
-                loadingView.setVisible(GONE);
+                loadingView.setLoaded();
             } else {
-                loadingView.setVisible(VISIBLE);
+                loadingView.setLoading();
             }
             super.onProgressChanged(view, newProgress);
         }
