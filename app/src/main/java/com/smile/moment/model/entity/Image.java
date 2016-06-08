@@ -22,7 +22,7 @@ import android.os.Parcelable;
  * @author Smile Wei
  * @since 2016/4/11.
  */
-public class ImageText implements Parcelable {
+public class Image implements Parcelable {
 
 
     /**
@@ -139,10 +139,10 @@ public class ImageText implements Parcelable {
         dest.writeString(this.url);
     }
 
-    public ImageText() {
+    public Image() {
     }
 
-    protected ImageText(Parcel in) {
+    protected Image(Parcel in) {
         this.type = in.readInt();
         this.docid = in.readString();
         this.title = in.readString();
@@ -154,15 +154,15 @@ public class ImageText implements Parcelable {
         this.url = in.readString();
     }
 
-    public static final Creator<ImageText> CREATOR = new Creator<ImageText>() {
+    public static final Creator<Image> CREATOR = new Creator<Image>() {
         @Override
-        public ImageText createFromParcel(Parcel source) {
-            return new ImageText(source);
+        public Image createFromParcel(Parcel source) {
+            return new Image(source);
         }
 
         @Override
-        public ImageText[] newArray(int size) {
-            return new ImageText[size];
+        public Image[] newArray(int size) {
+            return new Image[size];
         }
     };
 }

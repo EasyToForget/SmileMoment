@@ -34,7 +34,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smile.moment.R;
 import com.smile.moment.adapter.BooksAdapter;
-import com.smile.moment.model.entity.ImageText;
+import com.smile.moment.model.entity.Image;
 import com.smile.moment.utils.ApiUtil;
 import com.smile.moment.utils.Constants;
 import com.smile.moment.utils.NetWorkUtil;
@@ -66,7 +66,7 @@ public class NightChatActivity extends BaseSwipeActivity implements OnStartDragL
     @Bind(R.id.loading_view)
     LoadingView loadingView;
 
-    private List<ImageText> list;
+    private List<Image> list;
     private Activity activity;
     private Context context;
     private BooksAdapter adapter;
@@ -220,17 +220,17 @@ public class NightChatActivity extends BaseSwipeActivity implements OnStartDragL
                             JSONObject topic = topics.getJSONObject(0);
                             JSONArray docs = topic.getJSONArray("docs");
                             String book = docs.toString();
-                            List<ImageText> imageTextList = new Gson().fromJson(book, new TypeToken<List<ImageText>>() {
+                            List<Image> imageList = new Gson().fromJson(book, new TypeToken<List<Image>>() {
                             }.getType());
-                            if (imageTextList.size() == 0) {
+                            if (imageList.size() == 0) {
                                 if (loadingView != null)
                                     loadingView.setNoData();
                             }
-                            ImageText imageText = new ImageText();
-                            imageText.setType(ImageText.TYPE_BANNER);
-                            imageText.setImgsrc(data.getString("banner"));
-                            list.add(imageText);
-                            list.addAll(imageTextList);
+                            Image image = new Image();
+                            image.setType(Image.TYPE_BANNER);
+                            image.setImgsrc(data.getString("banner"));
+                            list.add(image);
+                            list.addAll(imageList);
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();

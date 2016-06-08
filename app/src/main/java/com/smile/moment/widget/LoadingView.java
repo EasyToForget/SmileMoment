@@ -28,27 +28,22 @@ public class LoadingView extends FrameLayout {
     @Bind(R.id.bottom_layout)
     View bottomLayout;
 
-    private Context context;
-
     public LoadingView(Context context) {
         super(context);
-        this.context = context;
-        initValues();
+        initValues(context);
     }
 
     public LoadingView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
-        initValues();
+        initValues(context);
     }
 
     public LoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.context = context;
-        initValues();
+        initValues(context);
     }
 
-    private void initValues() {
+    private void initValues(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_loading_view, this, true);
         ButterKnife.bind(view);
     }
@@ -72,7 +67,7 @@ public class LoadingView extends FrameLayout {
         setVisible(VISIBLE);
     }
 
-    public void setLoaded(){
+    public void setLoaded() {
         setVisible(GONE);
     }
 

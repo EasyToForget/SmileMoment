@@ -32,11 +32,10 @@ import android.view.ViewGroup;
 import com.android.volley.VolleyError;
 import com.smile.moment.R;
 import com.smile.moment.adapter.BooksAdapter;
-import com.smile.moment.model.entity.ImageText;
-import com.smile.moment.presenter.LoadPresenter;
-import com.smile.moment.presenter.VoicePresenterImpl;
+import com.smile.moment.model.entity.Image;
+import com.smile.moment.presenter.VoicePresenter;
 import com.smile.moment.ui.activity.AudioActivity;
-import com.smile.moment.ui.view.ImageTextView;
+import com.smile.moment.ui.contract.VoiceContract;
 import com.smile.moment.utils.Constants;
 import com.smile.moment.utils.StartActivityUtil;
 import com.smile.moment.utils.ToastUtil;
@@ -55,34 +54,35 @@ import butterknife.ButterKnife;
  * @author Smile Wei
  * @since 2016/4/11.
  */
-public class VoiceFragment extends Fragment implements BooksAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, OnStartDragListener, ImageTextView {
+public class VoiceFragment extends Fragment implements BooksAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, OnStartDragListener, VoiceContract.View {
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
     @Bind(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
     @Bind(R.id.loading_view)
     LoadingView loadingView;
-    private List<ImageText> list;
+    private List<Image> list;
     private Activity activity;
     private Context context;
     private BooksAdapter adapter;
     private ItemTouchHelper helper;
-    private LoadPresenter loadPresenter;
+    private VoicePresenter presenter;
     private boolean isPullRefresh = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_books, container, false);
         ButterKnife.bind(this, view);
-        init();
+        presenter = new VoicePresenter();
+        presenter.init(this);
         return view;
     }
 
-    private void init() {
+    @Override
+    public void initView() {
         activity = getActivity();
         context = activity.getApplicationContext();
         list = new ArrayList<>();
-        loadPresenter = new VoicePresenterImpl(this);
         refreshLayout.setColorSchemeResources(R.color.loading_color);
         refreshLayout.setOnRefreshListener(this);
 
@@ -103,10 +103,10 @@ public class VoiceFragment extends Fragment implements BooksAdapter.OnItemClickL
         loadingView.setOnReLoadListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadPresenter.getData();
+                presenter.start();
             }
         });
-        loadPresenter.getData();
+        presenter.start();
     }
 
     public void backToTop() {
@@ -134,7 +134,7 @@ public class VoiceFragment extends Fragment implements BooksAdapter.OnItemClickL
     @Override
     public void onRefresh() {
         isPullRefresh = true;
-        loadPresenter.getData();
+        presenter.start();
     }
 
     @Override
@@ -164,11 +164,11 @@ public class VoiceFragment extends Fragment implements BooksAdapter.OnItemClickL
     }
 
     @Override
-    public void setData(List<ImageText> imageTextList) {
+    public void showImages(List<Image> imageList) {
         list.clear();
-        list.addAll(imageTextList);
+        list.addAll(imageList);
         refreshLayout.setRefreshing(false);
-        if (imageTextList.size() <= 1) {
+        if (imageList.size() <= 1) {
             loadingView.setNoData();
         } else {
             loadingView.setLoaded();

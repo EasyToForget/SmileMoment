@@ -32,11 +32,10 @@ import android.view.ViewGroup;
 import com.android.volley.VolleyError;
 import com.smile.moment.R;
 import com.smile.moment.adapter.BooksAdapter;
-import com.smile.moment.model.entity.ImageText;
-import com.smile.moment.presenter.LoadPresenter;
-import com.smile.moment.presenter.ImageTextPresenterImpl;
+import com.smile.moment.model.entity.Image;
+import com.smile.moment.presenter.ImagePresenter;
 import com.smile.moment.ui.activity.ImageTextActivity;
-import com.smile.moment.ui.view.ImageTextView;
+import com.smile.moment.ui.contract.ImageContract;
 import com.smile.moment.utils.Constants;
 import com.smile.moment.utils.StartActivityUtil;
 import com.smile.moment.utils.ToastUtil;
@@ -55,33 +54,34 @@ import butterknife.ButterKnife;
  * @author Smile Wei
  * @since 2016/4/11.
  */
-public class ImageTextFragment extends Fragment implements BooksAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, OnStartDragListener, ImageTextView {
+public class ImageFragment extends Fragment implements BooksAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, OnStartDragListener, ImageContract.View {
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
     @Bind(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
     @Bind(R.id.loading_view)
     LoadingView loadingView;
-    private List<ImageText> list;
+    private List<Image> list;
     private Activity activity;
     private Context context;
     private BooksAdapter adapter;
     private ItemTouchHelper helper;
-    private LoadPresenter loadPresenter;
     private boolean isPullRefresh = false;
+    private ImagePresenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_books, container, false);
         ButterKnife.bind(this, view);
-        init();
+        presenter = new ImagePresenter();
+        presenter.init(this);
         return view;
     }
 
-    private void init() {
+    @Override
+    public void initView() {
         activity = getActivity();
         context = activity.getApplicationContext();
-        loadPresenter = new ImageTextPresenterImpl(this);
         list = new ArrayList<>();
         refreshLayout.setColorSchemeResources(R.color.loading_color);
         refreshLayout.setOnRefreshListener(this);
@@ -103,11 +103,10 @@ public class ImageTextFragment extends Fragment implements BooksAdapter.OnItemCl
         loadingView.setOnReLoadListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadPresenter.getData();
+                presenter.start();
             }
         });
-
-        loadPresenter.getData();
+        presenter.start();
     }
 
     public void backToTop() {
@@ -135,7 +134,8 @@ public class ImageTextFragment extends Fragment implements BooksAdapter.OnItemCl
     @Override
     public void onRefresh() {
         isPullRefresh = true;
-        loadPresenter.getData();
+        presenter.start();
+        presenter.result();
     }
 
     @Override
@@ -165,11 +165,11 @@ public class ImageTextFragment extends Fragment implements BooksAdapter.OnItemCl
     }
 
     @Override
-    public void setData(List<ImageText> imageTextList) {
+    public void showImages(List<Image> imageList) {
         list.clear();
-        list.addAll(imageTextList);
+        list.addAll(imageList);
         refreshLayout.setRefreshing(false);
-        if (imageTextList.size() <= 1) {
+        if (imageList.size() <= 1) {
             loadingView.setNoData();
         } else {
             loadingView.setLoaded();

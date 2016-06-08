@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.smile.moment.R;
-import com.smile.moment.model.entity.ImageText;
+import com.smile.moment.model.entity.Image;
 import com.smile.moment.widget.recyclerviewhelper.ItemTouchHelperAdapter;
 
 import java.util.Collections;
@@ -40,9 +40,9 @@ import butterknife.ButterKnife;
  */
 public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
     private Activity activity;
-    private List<ImageText> list;
+    private List<Image> list;
 
-    public BooksAdapter(Activity activity, List<ImageText> list) {
+    public BooksAdapter(Activity activity, List<Image> list) {
         this.activity = activity;
         this.list = list;
 
@@ -52,7 +52,7 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         switch (viewType) {
-            case ImageText.TYPE_CONTENT:
+            case Image.TYPE_CONTENT:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fragment_books, parent, false);
                 return new ViewHolder(view);
             default:
@@ -66,10 +66,10 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (holder instanceof ViewHolder) {
 
             ViewHolder viewHolder = (ViewHolder) holder;
-            ImageText imageText = list.get(position);
-            viewHolder.title.setText(imageText.getTitle());
-            viewHolder.digest.setText(imageText.getDigest());
-            Glide.with(activity).load(imageText.getImgsrc())
+            Image image = list.get(position);
+            viewHolder.title.setText(image.getTitle());
+            viewHolder.digest.setText(image.getDigest());
+            Glide.with(activity).load(image.getImgsrc())
                     .placeholder(R.color.place_holder_color)
                     .error(R.color.place_holder_color)
                     .into(viewHolder.image);

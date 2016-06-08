@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smile.moment.app.SmileApplication;
 import com.smile.moment.model.LoadModel;
-import com.smile.moment.model.entity.ImageText;
+import com.smile.moment.model.entity.Image;
 import com.smile.moment.presenter.OnLoadListener;
 import com.smile.moment.utils.ApiUtil;
 import com.smile.moment.utils.NetWorkUtil;
@@ -23,7 +23,7 @@ import java.util.List;
  * @author Smile Wei
  * @since 2016/5/26.
  */
-public class ImageTextModelImpl implements LoadModel {
+public class ImageModelImpl implements LoadModel {
     @Override
     public void load(final OnLoadListener listener) {
         if (!NetWorkUtil.isNetworkAvailable(SmileApplication.getContext())) {
@@ -35,20 +35,20 @@ public class ImageTextModelImpl implements LoadModel {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            List<ImageText> list = new ArrayList<>();
+                            List<Image> list = new ArrayList<>();
                             JSONObject jsonObject = new JSONObject(response);
                             JSONObject data = jsonObject.getJSONObject("S1426236075742");
                             JSONArray topics = data.getJSONArray("topics");
                             JSONObject topic = topics.getJSONObject(0);
                             JSONArray docs = topic.getJSONArray("docs");
                             String book = docs.toString();
-                            List<ImageText> imageTextList = new Gson().fromJson(book, new TypeToken<List<ImageText>>() {
+                            List<Image> imageList = new Gson().fromJson(book, new TypeToken<List<Image>>() {
                             }.getType());
-                            ImageText imageText = new ImageText();
-                            imageText.setType(ImageText.TYPE_BANNER);
-                            imageText.setImgsrc(data.getString("banner"));
-                            list.add(imageText);
-                            list.addAll(imageTextList);
+                            Image image = new Image();
+                            image.setType(Image.TYPE_BANNER);
+                            image.setImgsrc(data.getString("banner"));
+                            list.add(image);
+                            list.addAll(imageList);
                             listener.onSuccess(list);
                         } catch (JSONException e) {
                             e.printStackTrace();

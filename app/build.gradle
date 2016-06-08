@@ -36,4 +36,5 @@ dependencies {
     compile 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.hannesdorfmann:swipeback:1.0.4'
+    compile 'com.google.guava:guava:19.0'
 }

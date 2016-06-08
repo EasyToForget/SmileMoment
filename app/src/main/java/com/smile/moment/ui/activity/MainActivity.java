@@ -35,7 +35,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.bumptech.glide.Glide;
 import com.smile.moment.R;
-import com.smile.moment.ui.fragment.ImageTextFragment;
+import com.smile.moment.ui.fragment.ImageFragment;
 import com.smile.moment.ui.fragment.JokeFragment;
 import com.smile.moment.ui.fragment.VoiceFragment;
 import com.smile.moment.utils.ApiUtil;
@@ -93,16 +93,16 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationBar.addItem(new AHBottomNavigationItem(R.string.navigation_bottom_voice, R.drawable.ic_voice_white_24dp, R.color.colorAccent));
         bottomNavigationBar.addItem(new AHBottomNavigationItem(R.string.navigation_bottom_joke, R.drawable.ic_video_white_24dp, R.color.colorAccent));
 
-        final ImageTextFragment imageTextFragment = new ImageTextFragment();
+        final ImageFragment imageFragment = new ImageFragment();
         final VoiceFragment voiceFragment = new VoiceFragment();
         final JokeFragment jokeFragment = new JokeFragment();
-        fragments = new Fragment[]{imageTextFragment, voiceFragment, jokeFragment};
+        fragments = new Fragment[]{imageFragment, voiceFragment, jokeFragment};
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, imageTextFragment)
+                .add(R.id.container, imageFragment)
                 .add(R.id.container, voiceFragment)
                 .add(R.id.container, jokeFragment)
-                .show(imageTextFragment)
+                .show(imageFragment)
                 .hide(voiceFragment)
                 .hide(jokeFragment)
                 .commit();
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 switch (currentPosition) {
                     case 0:
-                        imageTextFragment.backToTop();
+                        imageFragment.backToTop();
                         break;
                     case 1:
                         voiceFragment.backToTop();

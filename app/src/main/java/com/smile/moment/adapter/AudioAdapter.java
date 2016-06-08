@@ -24,7 +24,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.smile.moment.R;
-import com.smile.moment.model.entity.VoiceContent;
+import com.smile.moment.model.entity.Voice;
 
 import java.util.List;
 
@@ -37,9 +37,9 @@ import butterknife.ButterKnife;
  */
 public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.ViewHolder> {
     private Activity activity;
-    private List<VoiceContent> list;
+    private List<Voice> list;
 
-    public AudioAdapter(Activity activity, List<VoiceContent> list) {
+    public AudioAdapter(Activity activity, List<Voice> list) {
         this.activity = activity;
         this.list = list;
 

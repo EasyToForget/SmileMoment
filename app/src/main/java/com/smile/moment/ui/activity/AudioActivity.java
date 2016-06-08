@@ -31,7 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smile.moment.R;
 import com.smile.moment.adapter.AudioAdapter;
-import com.smile.moment.model.entity.VoiceContent;
+import com.smile.moment.model.entity.Voice;
 import com.smile.moment.utils.ApiUtil;
 import com.smile.moment.utils.Constants;
 import com.smile.moment.utils.DateTimeFormatUtil;
@@ -66,7 +66,7 @@ public class AudioActivity extends BaseSwipeActivity {
     @Bind(R.id.loading_view)
     LoadingView loadingView;
 
-    private List<VoiceContent> list;
+    private List<Voice> list;
     private AudioAdapter adapter;
 
     @Override
@@ -134,7 +134,7 @@ public class AudioActivity extends BaseSwipeActivity {
                             toolbar.setTitle("音频版(" + DateTimeFormatUtil.long2stringByFormatForZh(DateTimeFormatUtil.string2longSecondByFormat(time)) + ")");
                             JSONArray video = jsonObject1.getJSONArray("video");
                             String book = video.toString();
-                            List<VoiceContent> booksList = new Gson().fromJson(book, new TypeToken<List<VoiceContent>>() {
+                            List<Voice> booksList = new Gson().fromJson(book, new TypeToken<List<Voice>>() {
                             }.getType());
                             if (booksList.size() == 0) {
                                 if (loadingView != null)

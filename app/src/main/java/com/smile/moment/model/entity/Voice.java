@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * @author Smile Wei
  * @since 2016/4/20.
  */
-public class VoiceContent implements Parcelable {
+public class Voice implements Parcelable {
     /**
      * commentid :
      * ref : <!--VIDEO#0-->
@@ -164,10 +164,10 @@ public class VoiceContent implements Parcelable {
         dest.writeString(this.size);
     }
 
-    public VoiceContent() {
+    public Voice() {
     }
 
-    protected VoiceContent(Parcel in) {
+    protected Voice(Parcel in) {
         this.commentid = in.readString();
         this.ref = in.readString();
         this.topicid = in.readString();
@@ -183,15 +183,15 @@ public class VoiceContent implements Parcelable {
         this.size = in.readString();
     }
 
-    public static final Parcelable.Creator<VoiceContent> CREATOR = new Parcelable.Creator<VoiceContent>() {
+    public static final Parcelable.Creator<Voice> CREATOR = new Parcelable.Creator<Voice>() {
         @Override
-        public VoiceContent createFromParcel(Parcel source) {
-            return new VoiceContent(source);
+        public Voice createFromParcel(Parcel source) {
+            return new Voice(source);
         }
 
         @Override
-        public VoiceContent[] newArray(int size) {
-            return new VoiceContent[size];
+        public Voice[] newArray(int size) {
+            return new Voice[size];
         }
     };
 }
