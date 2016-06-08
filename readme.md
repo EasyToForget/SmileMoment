@@ -1,5 +1,5 @@
 ###SmileMoment
-仿网易新闻客户端轻松一刻栏目，项目遵循Material Design规范，采用Google最新推荐的Bottom Navigation和NavigationView相结合，图片大都使用SVG格式。
+仿网易新闻客户端轻松一刻栏目，项目遵循Material Design规范，使用Google推荐的MVP构架，采用Google最新推荐的Bottom Navigation和NavigationView相结合，图片大都使用SVG格式。
 
 ###Demo
 ![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo01.gif)
