@@ -19,7 +19,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -77,18 +76,7 @@ public class AudioActivity extends BaseSwipeActivity implements AudioContract.Vi
         activity = this;
         docId = getIntent().getStringExtra(Constants.EXTRA_DOCS_ID);
         list = new ArrayList<>();
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        setToolBar(toolbar, "");
 
         loadingView.setHideBottom();
         loadingView.setOnReLoadListener(new View.OnClickListener() {
