@@ -31,7 +31,7 @@ import android.view.ViewGroup;
 
 import com.android.volley.VolleyError;
 import com.smile.moment.R;
-import com.smile.moment.adapter.BooksAdapter;
+import com.smile.moment.ui.adapter.BooksAdapter;
 import com.smile.moment.model.entity.Image;
 import com.smile.moment.presenter.VoicePresenter;
 import com.smile.moment.ui.activity.AudioActivity;

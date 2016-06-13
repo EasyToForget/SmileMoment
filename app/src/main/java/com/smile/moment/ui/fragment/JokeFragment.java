@@ -25,29 +25,22 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.smile.moment.R;
-import com.smile.moment.adapter.JokesAdapter;
 import com.smile.moment.model.entity.Jokes;
-import com.smile.moment.utils.ApiUtil;
-import com.smile.moment.utils.NetWorkUtil;
+import com.smile.moment.presenter.JokesPresenter;
+import com.smile.moment.ui.adapter.JokesAdapter;
+import com.smile.moment.ui.contract.JokesContract;
 import com.smile.moment.utils.ToastUtil;
-import com.smile.moment.volley.VolleyHttpClient;
 import com.smile.moment.widget.LoadingView;
 import com.smile.moment.widget.PullToLoadMoreRecyclerView;
 import com.smile.moment.widget.recyclerviewhelper.OnStartDragListener;
 import com.smile.moment.widget.recyclerviewhelper.SimpleItemTouchHelperCallback;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +52,7 @@ import butterknife.ButterKnife;
  * @author Smile Wei
  * @since 2016/4/11.
  */
-public class JokeFragment extends Fragment implements OnStartDragListener {
+public class JokeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, OnStartDragListener, JokesContract.View {
 
     @Bind(R.id.recycler_view)
     PullToLoadMoreRecyclerView recyclerView;
@@ -73,27 +66,26 @@ public class JokeFragment extends Fragment implements OnStartDragListener {
     private Context context;
     private JokesAdapter adapter;
     private ItemTouchHelper helper;
+    private JokesPresenter presenter;
+    private boolean isPullRefresh = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_jokes, container, false);
         ButterKnife.bind(this, view);
-        init();
+        presenter = new JokesPresenter();
+        presenter.init(this);
         return view;
     }
 
-    private void init() {
+    @Override
+    public void initView() {
         activity = getActivity();
         context = activity.getApplicationContext();
         list = new ArrayList<>();
         refreshLayout.setColorSchemeResources(R.color.loading_color);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getJokes(null, false);
-            }
-        });
+        refreshLayout.setOnRefreshListener(this);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -102,22 +94,21 @@ public class JokeFragment extends Fragment implements OnStartDragListener {
         helper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(adapter, ItemTouchHelper.START | ItemTouchHelper.END));
         helper.attachToRecyclerView(recyclerView);
 
-        loadingView.setLoading();
         loadingView.setOnReLoadListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingView.setLoading();
-                getJokes(loadingView, false);
+                presenter.start(false);
             }
         });
 
         recyclerView.setOnLoadMoreListener(new PullToLoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore() {
-                getJokes(null, true);
+                Log.d("onScrolled", "true");
+                presenter.start(true);
             }
         });
-        getJokes(loadingView, false);
+        presenter.start(false);
     }
 
     public void backToTop() {
@@ -129,52 +120,11 @@ public class JokeFragment extends Fragment implements OnStartDragListener {
         });
     }
 
-    private void getJokes(final LoadingView loadingView, final boolean isLoad) {
-        if (!NetWorkUtil.isNetworkAvailable(context)) {
-            ToastUtil.showSortToast(context, "哎呀，网络开小差啦～～～");
-            refreshLayout.setRefreshing(false);
-            if (loadingView != null)
-                loadingView.setLoadError();
-            return;
-        }
-        VolleyHttpClient.getInstance(context).get(ApiUtil.MOMENT_JOKE, null,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            recyclerView.setLoading(false);
-                            if (!isLoad) {
-                                list.clear();
-                                Jokes jokes = new Jokes();
-                                jokes.setType(1);
-                                list.add(jokes);
-                            }
-                            refreshLayout.setRefreshing(false);
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray topics = jsonObject.getJSONArray("段子");
-                            String book = topics.toString();
-                            List<Jokes> booksList = new Gson().fromJson(book, new TypeToken<List<Jokes>>() {
-                            }.getType());
-                            if (!isLoad && booksList.size() == 0) {
-                                if (loadingView != null)
-                                    loadingView.setNoData();
-                            }
-                            list.addAll(list.size() - 1, booksList);
-                            adapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        recyclerView.setLoading(false);
-                        if (loadingView != null)
-                            loadingView.setLoadError();
-                        refreshLayout.setRefreshing(false);
-                    }
-                });
+    @Override
+    public void onRefresh() {
+        isPullRefresh = true;
+        presenter.start(false);
+        presenter.result();
     }
 
     @Override
@@ -187,4 +137,44 @@ public class JokeFragment extends Fragment implements OnStartDragListener {
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
         helper.startDrag(viewHolder);
     }
+
+    @Override
+    public void loading(boolean isLoad) {
+        if (!isPullRefresh && !isLoad)
+            loadingView.setLoading();
+        isPullRefresh = false;
+    }
+
+    @Override
+    public void networkError() {
+        ToastUtil.showSortToast(context, "哎呀，网络开小差啦～～～");
+        refreshLayout.setRefreshing(false);
+        loadingView.setLoadError();
+    }
+
+    @Override
+    public void error(VolleyError error) {
+        loadingView.setLoadError();
+        refreshLayout.setRefreshing(false);
+        ToastUtil.showSortToast(context, "服务器出错。。。");
+    }
+
+    @Override
+    public void showJokes(List<Jokes> jokesList, boolean isLoad) {
+        if (!isLoad) {
+            list.clear();
+            Jokes jokes = new Jokes();
+            jokes.setType(Jokes.TYPE_FOOTER_LOAD);
+            list.add(jokes);
+        }
+        list.addAll(list.size() - 1, jokesList);
+        refreshLayout.setRefreshing(false);
+        if (jokesList.size() <= 1) {
+            loadingView.setNoData();
+        } else {
+            loadingView.setLoaded();
+        }
+        adapter.notifyDataSetChanged();
+    }
+
 }

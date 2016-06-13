@@ -30,7 +30,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smile.moment.R;
-import com.smile.moment.adapter.AudioAdapter;
+import com.smile.moment.ui.adapter.AudioAdapter;
 import com.smile.moment.model.entity.Voice;
 import com.smile.moment.utils.ApiUtil;
 import com.smile.moment.utils.Constants;

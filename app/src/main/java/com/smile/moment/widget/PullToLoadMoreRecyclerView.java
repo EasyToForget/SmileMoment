@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 /**
  * @author Smile Wei
@@ -39,11 +40,11 @@ public class PullToLoadMoreRecyclerView extends RecyclerView {
         int lastVisibleItem = ((LinearLayoutManager) this.getLayoutManager()).findLastVisibleItemPosition();
         int totalItemCount = this.getLayoutManager().getItemCount();
 
+        //Log.d("onScrolled", lastVisibleItem + "-------" + totalItemCount + "====" + dy);
         if (lastVisibleItem == totalItemCount - 1 && dy > 0) {
             //if (!loading && page < lastPage) {
             if (!loading) {
-                loading = true;
-
+                //loading = true;
                 if (null != loadMoreListener)
                     loadMoreListener.loadMore();
             }
