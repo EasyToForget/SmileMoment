@@ -13,14 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.smile.moment.model;
+package com.smile.moment.ui.contract;
 
-import com.smile.moment.presenter.OnLoadListener;
+import com.android.volley.VolleyError;
+import com.smile.moment.BasePresenter;
+import com.smile.moment.BaseView;
+import com.smile.moment.model.entity.Voice;
+
+import java.util.List;
 
 /**
  * @author Smile Wei
- * @since 2016/5/26.
+ * @since 2016/6/7.
  */
-public interface LoadModel {
-    void load(OnLoadListener listener);
+public interface AudioContract {
+
+    interface View extends BaseView {
+        void loading();
+
+        void networkError();
+
+        void error(VolleyError error);
+
+        void showVoices(List<Voice> list, String text);
+
+    }
+
+    interface Presenter extends BasePresenter {
+        void start(String text);
+        void result();
+    }
 }

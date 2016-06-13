@@ -34,7 +34,7 @@ import com.smile.moment.R;
 import com.smile.moment.ui.adapter.BooksAdapter;
 import com.smile.moment.model.entity.Image;
 import com.smile.moment.presenter.ImagePresenter;
-import com.smile.moment.ui.activity.ImageTextActivity;
+import com.smile.moment.ui.activity.ImageActivity;
 import com.smile.moment.ui.contract.ImageContract;
 import com.smile.moment.utils.Constants;
 import com.smile.moment.utils.StartActivityUtil;
@@ -128,7 +128,7 @@ public class ImageFragment extends Fragment implements BooksAdapter.OnItemClickL
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.EXTRA_DOCS_ID, list.get(position).getDocid());
-        StartActivityUtil.start(activity, ImageTextActivity.class, bundle);
+        StartActivityUtil.start(activity, ImageActivity.class, bundle);
     }
 
     @Override

@@ -189,7 +189,7 @@ public class NightChatActivity extends BaseSwipeActivity implements OnStartDragL
             public void onItemClick(int position) {
 
                 Intent intent = new Intent();
-                intent.setClass(activity, ImageTextActivity.class);
+                intent.setClass(activity, ImageActivity.class);
                 intent.putExtra(Constants.EXTRA_DOCS_ID, list.get(position).getDocid());
                 startActivity(intent);
             }

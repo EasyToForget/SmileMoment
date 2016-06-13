@@ -13,14 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.smile.moment.model;
+package com.smile.moment.presenter;
 
-import com.smile.moment.presenter.OnLoadListener;
+import com.android.volley.VolleyError;
 
 /**
  * @author Smile Wei
- * @since 2016/5/26.
+ * @since 2016/6/12.
+ * 在Presenter层实现，给Model层回调，更改View层的状态，确保Model层不直接操作View层
  */
-public interface LoadModel {
-    void load(OnLoadListener listener);
+public interface OnAudioLoadListener<T> extends OnLoadListener<T> {
+
+    /**
+     * 成功时的回调
+     *
+     * @param success 成功信息
+     */
+    void onSuccess(T success, String text);
+
+    /**
+     * 失败时的回调
+     *
+     * @param error 错误信息
+     */
+    void onError(VolleyError error);
+
+    void networkError();
 }

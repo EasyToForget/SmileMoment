@@ -15,12 +15,12 @@
  */
 package com.smile.moment.model;
 
-import com.smile.moment.presenter.OnLoadListener;
+import com.smile.moment.presenter.OnAudioLoadListener;
 
 /**
  * @author Smile Wei
  * @since 2016/5/26.
  */
-public interface LoadModel {
-    void load(OnLoadListener listener);
+public interface AudioLoadModel extends LoadModel {
+    void load(OnAudioLoadListener listener, String text);
 }

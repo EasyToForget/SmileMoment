@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
  * @author Smile Wei
  * @since 2016/4/12.
  */
-public class ImageTextActivity extends BaseSwipeActivity {
+public class ImageActivity extends BaseSwipeActivity {
     @Bind(R.id.web_view)
     LoadingWebView webView;
 
