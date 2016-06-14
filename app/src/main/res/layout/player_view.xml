@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.smile.moment.widget.PlayerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/player_layout"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:src="@drawable/placeholder_disk_play" />
+
+        <ImageView
+            android:id="@+id/player_image"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@null"
+            android:src="@drawable/placeholder_disk_play" />
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/player_needle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="12dp"
+        android:contentDescription="@null"
+        android:src="@drawable/play_needle" />
+
+
+</com.smile.moment.widget.PlayerView>

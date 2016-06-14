@@ -33,7 +33,7 @@
             android:name=".ui.activity.AudioActivity"
             android:theme="@style/AppTheme.Toolbar" />
         <activity android:name=".ui.activity.AudioOnlineActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.Toolbar"/>
     </application>
 
 </manifest>
