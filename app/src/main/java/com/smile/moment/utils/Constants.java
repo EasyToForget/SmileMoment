@@ -24,6 +24,8 @@ public class Constants {
     public final static String EXTRA_DOCS_ID = "docsId";
 
     public final static String EXTRA_SOURCE_ID = "sourceId";
+    public final static String EXTRA_IMAGE_URL = "imageUrl";
+    public final static String EXTRA_MP3_URL = "mp3Url";
 
     public final static int SOURCE_FOR_NIGHT_CHAT = 1;
     public final static int SOURCE_FOR_DRIVER_STUDY = 2;

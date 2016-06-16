@@ -19,6 +19,8 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -41,6 +43,7 @@ public class PlayerView extends RelativeLayout {
     private static final int PLAYER_ANIMATOR_REPEAT_COUNT = -1;
     private static final int PLAYER_REVERSE_ANIMATOR_TIME = 500;
     private RelativeLayout playerLayout;
+    private ImageView playerDisc;
     private ImageView playerImage;
     private ImageView playerNeedle;
 
@@ -49,24 +52,49 @@ public class PlayerView extends RelativeLayout {
     private ObjectAnimator playerAnimator;
     private float playerLayoutAnimatorValue;
 
+    private float needlePivotX = 0.0f;
+    private float needlePivotY = 0.0f;
+    private static final float X_FRACTION = 48.0f / 276.0f;
+    private static final float Y_FRACTION = 48.0f / 414.0f;
+    private Context context;
+
     public PlayerView(Context context) {
         super(context);
+        init(context);
     }
 
     public PlayerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context);
     }
 
     public PlayerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context);
+    }
+
+    private void init(Context context) {
+        this.context = context;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.play_needle);
+        needlePivotX = bitmap.getWidth() * X_FRACTION;
+        needlePivotY = bitmap.getHeight() * Y_FRACTION;
+        bitmap.recycle();
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         playerLayout = (RelativeLayout) findViewById(R.id.player_layout);
+        playerDisc = (ImageView) findViewById(R.id.player_disc);
         playerImage = (ImageView) findViewById(R.id.player_image);
         playerNeedle = (ImageView) findViewById(R.id.player_needle);
+
+        playerNeedle.setPivotX(needlePivotX);
+        playerNeedle.setPivotY(needlePivotY);
     }
 
     public void start() {
@@ -162,11 +190,20 @@ public class PlayerView extends RelativeLayout {
         playerAnimator.start();
     }
 
+
+    public void loadPlayerDisc(Activity activity) {
+        Glide.with(activity).load(R.drawable.placeholder_disk_play)
+                .placeholder(R.drawable.placeholder_disk_play)
+                .error(R.drawable.placeholder_disk_play)
+                .transform(new GlideCircleTransform(context))
+                .into(playerDisc);
+    }
+
     public void loadPlayerImage(Activity activity, String url) {
         Glide.with(activity).load(url)
                 .placeholder(R.color.bg_toolbar_color)
                 .error(R.color.bg_toolbar_color)
-                .transform(new GlideCircleTransform(activity))
+                .transform(new GlideCircleTransform(context))
                 .into(playerImage);
     }
 }

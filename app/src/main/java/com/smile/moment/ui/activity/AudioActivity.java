@@ -17,7 +17,6 @@ package com.smile.moment.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +30,7 @@ import com.smile.moment.presenter.AudioPresenter;
 import com.smile.moment.ui.adapter.AudioAdapter;
 import com.smile.moment.ui.contract.AudioContract;
 import com.smile.moment.utils.Constants;
+import com.smile.moment.utils.StartActivityUtil;
 import com.smile.moment.utils.ToastUtil;
 import com.smile.moment.widget.LoadingView;
 
@@ -91,7 +91,11 @@ public class AudioActivity extends BaseSwipeActivity implements AudioContract.Vi
         adapter.setOnItemClickListener(new AudioAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                startActivity(new Intent(activity, AudioOnlineActivity.class));
+
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.EXTRA_IMAGE_URL, list.get(position).getCover());
+                bundle.putString(Constants.EXTRA_MP3_URL, list.get(position).getUrl_mp4());
+                StartActivityUtil.start(activity, AudioOnlineActivity.class, bundle);
             }
         });
         presenter.start(docId);
