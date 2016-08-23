@@ -64,21 +64,20 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
-
             ViewHolder viewHolder = (ViewHolder) holder;
-            Image image = list.get(position);
-            viewHolder.title.setText(image.getTitle());
-            viewHolder.digest.setText(image.getDigest());
-            Glide.with(activity).load(image.getImgsrc())
+            Image bean = list.get(position);
+            viewHolder.tvTitle.setText(bean.getTitle());
+            viewHolder.tvDigest.setText(bean.getDigest());
+            Glide.with(activity).load(bean.getImgsrc())
                     .placeholder(R.color.place_holder_color)
                     .error(R.color.place_holder_color)
-                    .into(viewHolder.image);
+                    .into(viewHolder.ivThumb);
         } else if (holder instanceof BannerHolder) {
             BannerHolder bannerHolder = (BannerHolder) holder;
             Glide.with(activity).load(list.get(position).getImgsrc())
                     .placeholder(R.color.place_holder_color)
                     .error(R.color.place_holder_color)
-                    .into(bannerHolder.banner);
+                    .into(bannerHolder.ivBanner);
         }
 
     }
@@ -118,12 +117,12 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.image)
-        ImageView image;
-        @Bind(R.id.title)
-        TextView title;
-        @Bind(R.id.digest)
-        TextView digest;
+        @Bind(R.id.iv_thumb)
+        ImageView ivThumb;
+        @Bind(R.id.tv_title)
+        TextView tvTitle;
+        @Bind(R.id.tv_digest)
+        TextView tvDigest;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -140,8 +139,8 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     class BannerHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.banner)
-        ImageView banner;
+        @Bind(R.id.iv_banner)
+        ImageView ivBanner;
 
         public BannerHolder(View itemView) {
             super(itemView);

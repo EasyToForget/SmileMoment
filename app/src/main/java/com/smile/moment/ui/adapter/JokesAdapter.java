@@ -68,9 +68,9 @@ public class JokesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (holder instanceof ViewHolder) {
             ViewHolder viewHolder = (ViewHolder) holder;
             Jokes jokes = list.get(position);
-            viewHolder.digest.setText(jokes.getDigest());
-            viewHolder.up.setText(String.valueOf(jokes.getUpTimes()));
-            viewHolder.down.setText(String.valueOf(jokes.getDownTimes()));
+            viewHolder.tvDigest.setText(jokes.getDigest());
+            viewHolder.tvUp.setText(String.valueOf(jokes.getUpTimes()));
+            viewHolder.tvDown.setText(String.valueOf(jokes.getDownTimes()));
         } else if (holder instanceof FooterHolder) {
             FooterHolder footerHolder = (FooterHolder) holder;
             footerHolder.footerLoading.setVisibility(View.VISIBLE);
@@ -103,32 +103,32 @@ public class JokesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.digest)
-        TextView digest;
-        @Bind(R.id.share)
-        ImageView share;
-        @Bind(R.id.up)
-        TextView up;
-        @Bind(R.id.down)
-        TextView down;
+        @Bind(R.id.tv_digest)
+        TextView tvDigest;
+        @Bind(R.id.iv_share)
+        ImageView ivShare;
+        @Bind(R.id.tv_up)
+        TextView tvUp;
+        @Bind(R.id.tv_down)
+        TextView tvDown;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick({R.id.share, R.id.up, R.id.down})
+        @OnClick({R.id.iv_share, R.id.tv_up, R.id.tv_down})
         void onClick(View view) {
             switch (view.getId()) {
-                case R.id.share:
-                    AnimatedVectorDrawable shareDrawable = (AnimatedVectorDrawable) share.getDrawable();
+                case R.id.iv_share:
+                    AnimatedVectorDrawable shareDrawable = (AnimatedVectorDrawable) ivShare.getDrawable();
                     shareDrawable.start();
                     break;
-                case R.id.up:
-                    AnimatedVectorDrawable upDrawable = (AnimatedVectorDrawable) up.getCompoundDrawables()[0];
+                case R.id.tv_up:
+                    AnimatedVectorDrawable upDrawable = (AnimatedVectorDrawable) tvUp.getCompoundDrawables()[0];
                     upDrawable.start();
                     break;
-                case R.id.down:
+                case R.id.tv_down:
                     break;
             }
         }

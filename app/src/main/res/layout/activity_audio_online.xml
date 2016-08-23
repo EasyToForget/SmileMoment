@@ -39,13 +39,13 @@
 
 
     <RelativeLayout
-        android:id="@+id/play_layout"
+        android:id="@+id/rl_play"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
         <ImageView
-            android:id="@+id/pause"
+            android:id="@+id/iv_pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -53,25 +53,25 @@
             android:src="@drawable/selector_btn_pause" />
 
         <ImageView
-            android:id="@+id/prev"
+            android:id="@+id/iv_prev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/pause"
+            android:layout_toLeftOf="@id/iv_pause"
             android:contentDescription="@null"
             android:src="@drawable/selector_btn_prev" />
 
         <ImageView
-            android:id="@+id/next"
+            android:id="@+id/iv_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/pause"
+            android:layout_toRightOf="@id/iv_pause"
             android:contentDescription="@null"
             android:src="@drawable/selector_btn_next" />
 
         <ImageView
-            android:id="@+id/list"
+            android:id="@+id/iv_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -84,10 +84,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/play_layout">
+        android:layout_above="@id/rl_play">
 
         <TextView
-            android:id="@+id/current_time"
+            android:id="@+id/tv_current_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -100,14 +100,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/count_time"
-            android:layout_toRightOf="@id/current_time"
+            android:layout_toLeftOf="@+id/tv_count_time"
+            android:layout_toRightOf="@id/tv_current_time"
             android:maxHeight="2dp"
             android:minHeight="2dp"
             android:progressDrawable="@drawable/player_seekbar" />
 
         <TextView
-            android:id="@+id/count_time"
+            android:id="@+id/tv_count_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
