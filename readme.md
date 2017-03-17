@@ -1,18 +1,18 @@
-###SmileMoment
+### SmileMoment
 仿网易新闻客户端轻松一刻栏目，项目遵循Material Design规范，使用Google推荐的MVP构架，采用Google最新推荐的Bottom Navigation和NavigationView相结合，图片大都使用SVG格式。
 
-###Demo
+### Demo
 ![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo01.gif)
 ![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo02.gif)
 ![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo03.gif)
 ![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo04.gif)
 
 
-###In progress
+### In progress
 音频界面实现跟网易云音乐同样的效果
 
 
-###开源项目说明
+### 开源项目说明
 
 > **ButterKnife**
 

@@ -88,10 +88,10 @@ public class PlayerView extends RelativeLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        playerLayout = (RelativeLayout) findViewById(R.id.player_layout);
-        playerDisc = (ImageView) findViewById(R.id.player_disc);
-        playerImage = (ImageView) findViewById(R.id.player_image);
-        playerNeedle = (ImageView) findViewById(R.id.player_needle);
+        playerLayout = (RelativeLayout) findViewById(R.id.rl_player);
+        playerDisc = (ImageView) findViewById(R.id.iv_player_disc);
+        playerImage = (ImageView) findViewById(R.id.iv_player);
+        playerNeedle = (ImageView) findViewById(R.id.iv_player_needle);
 
         playerNeedle.setPivotX(needlePivotX);
         playerNeedle.setPivotY(needlePivotY);
