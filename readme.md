@@ -2,10 +2,10 @@
 仿网易新闻客户端轻松一刻栏目，项目遵循Material Design规范，使用Google推荐的MVP构架，采用Google最新推荐的Bottom Navigation和NavigationView相结合，图片大都使用SVG格式。
 
 ### Demo
-![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo01.gif)
-![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo02.gif)
-![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo03.gif)
-![image](https://raw.githubusercontent.com/EasyToForget/SmileMoment/master/demo04.gif)
+![image](gif/demo01.gif)
+![image](gif/demo02.gif)
+![image](gif/demo03.gif)
+![image](gif/demo04.gif)
 
 
 ### In progress
