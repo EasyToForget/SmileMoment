@@ -12,10 +12,11 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/user_icon"
+        android:id="@+id/iv_user"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:contentDescription="@null"
         android:src="@android:drawable/sym_def_app_icon" />
 
     <TextView
@@ -26,7 +27,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="zhiye.wei@gmail.com" />

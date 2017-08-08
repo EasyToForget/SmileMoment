@@ -16,6 +16,7 @@
 package com.smile.moment.ui.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -44,6 +45,8 @@ import com.smile.moment.utils.Constants;
 import com.smile.moment.utils.StartActivityUtil;
 import com.smile.moment.widget.GlideCircleTransform;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -61,7 +64,9 @@ public class MainActivity extends AppCompatActivity
     AHBottomNavigation bottomNavigationBar;
     private Fragment[] fragments;
     private int currentPosition = 0;
-    ImageView userIcon;
+    ImageView ivUser;
+
+    private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
 
 
     @Override
@@ -81,17 +86,34 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         View headerView = navView.getHeaderView(0);
-        userIcon = (ImageView) headerView.findViewById(R.id.user_icon);
+        ivUser = (ImageView) headerView.findViewById(R.id.iv_user);
         Glide.with(this).load(ApiUtil.USER_ICON)
                 .transform(new GlideCircleTransform(context))
                 .placeholder(R.color.place_holder_color)
                 .error(R.color.place_holder_color)
-                .into(userIcon);
+                .into(ivUser);
         navView.setNavigationItemSelectedListener(this);
+
         bottomNavigationBar.setOnTabSelectedListener(this);
-        bottomNavigationBar.addItem(new AHBottomNavigationItem(R.string.navigation_bottom_image_text, R.drawable.ic_book_white_24dp, R.color.colorAccent));
-        bottomNavigationBar.addItem(new AHBottomNavigationItem(R.string.navigation_bottom_voice, R.drawable.ic_voice_white_24dp, R.color.colorAccent));
-        bottomNavigationBar.addItem(new AHBottomNavigationItem(R.string.navigation_bottom_joke, R.drawable.ic_video_white_24dp, R.color.colorAccent));
+
+        AHBottomNavigationItem item1 =new AHBottomNavigationItem(R.string.navigation_bottom_image_text, R.drawable.ic_book_white_24dp, R.color.colorAccent);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.navigation_bottom_voice, R.drawable.ic_voice_white_24dp, R.color.colorAccent);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.navigation_bottom_joke, R.drawable.ic_video_white_24dp, R.color.colorAccent);
+
+        bottomNavigationItems.add(item1);
+        bottomNavigationItems.add(item2);
+        bottomNavigationItems.add(item3);
+
+        bottomNavigationBar.addItems(bottomNavigationItems);
+        bottomNavigationBar.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+        bottomNavigationBar.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
+        bottomNavigationBar.setAccentColor(Color.parseColor("#1E8CF0"));
+        bottomNavigationBar.setInactiveColor(Color.parseColor("#949494"));
+        bottomNavigationBar.setNotificationBackgroundColor(Color.parseColor("#FE5652"));
+        bottomNavigationBar.setNotificationTextColor(Color.parseColor("#FE5652"));
+        bottomNavigationBar.setColored(false);
+
+        bottomNavigationBar.setUseElevation(false);
 
         final ImageFragment imageFragment = new ImageFragment();
         final VoiceFragment voiceFragment = new VoiceFragment();
@@ -184,7 +206,7 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void onTabSelected(int position, boolean wasSelected) {
+    public boolean onTabSelected(int position, boolean wasSelected) {
         currentPosition = position;
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -215,5 +237,6 @@ public class MainActivity extends AppCompatActivity
                 trx.hide(fragments[i]);
             }
         }
+        return true;
     }
 }
