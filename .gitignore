@@ -1,8 +1,1 @@
-*.iml
-.gradle
-/local.properties
-/.idea
-.DS_Store
-/app/src/test
 /build
-/captures
